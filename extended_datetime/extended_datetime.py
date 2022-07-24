@@ -60,33 +60,65 @@ class ExtendedDateTime(datetime):
         :returns: A new instance of ExtendedDateTime with computed value.
         """
 
-        delta = timedelta()
+        # deep copy self by adding a 0-delta
+        new_self = self + timedelta()
+
+        if months:
+            # normalize months, by reducing to years and months
+
+            months_abs = abs(months)
+
+            year_offset = months_abs // 12
+            month_remaining = months_abs % 12
+
+            # make sure years has been initialized with a numeric value
+            years = years or 0
+
+            if months < 0:
+                years -= year_offset
+                months = 0 - month_remaining
+
+            else:
+                years += year_offset
+                months = month_remaining
 
         if years:
 
-            new_year = self.year + years
+            new_year = new_self.year + years
 
             # For leap years, it becomes necassary to ensure that if the day
             # represents the end of the month, it is updated appropriately.
-            new_days = min(self.day, self.end_of_month_day(new_year, self.month))
+            new_days = min(
+                self.day,
+                self.end_of_month_day(new_year, new_self.month))
 
             # Creating a delta of only the parts that were modified.
-            delta += (datetime(new_year, self.month, new_days) - datetime(self.year, self.month, self.day))
+            new_self += (datetime(new_year, new_self.month, new_days) -
+                         datetime(new_self.year, new_self.month, new_self.day))
 
         if months:
 
-            new_month = self.month + months
+            new_year = new_self.year
 
-            new_year = self.year + (new_month // 12)
+            new_month = new_self.month + months
 
-            new_month = (new_month % 12)
+            if new_month < 1:
+                new_year -= 1
+
+            if not new_month:
+                new_month = 12
+            elif new_month < 1:
+                new_month = 12 + new_month
 
             # Make sure the new month's calculation does not overflow the
             # month's number of days.
-            new_days = min(self.day, self.end_of_month_day(new_year, new_month))
+            new_days = min(
+                new_self.day,
+                self.end_of_month_day(new_year, new_month))
 
             # Creating a delta of only the parts that were modified
-            delta += (datetime(new_year, new_month, new_days) - datetime(self.year, self.month, self.day))
+            new_self += (datetime(new_year, new_month, new_days) -
+                         datetime(new_self.year, new_self.month, new_self.day))
 
         # normalize by coalesce to 0 for values
         new_days = days or 0
@@ -96,7 +128,7 @@ class ExtendedDateTime(datetime):
         new_microseconds = microseconds or 0
         new_weeks = weeks or 0
 
-        delta += timedelta(
+        new_self += timedelta(
             days=new_days,
             hours=new_hours,
             minutes=new_minutes,
@@ -104,7 +136,7 @@ class ExtendedDateTime(datetime):
             microseconds=new_microseconds,
             weeks=new_weeks)
 
-        return self + delta
+        return new_self
 
     def end_of_month_day(self, year: int = None, month: int = None) -> int:
         """
