@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from .new_years_day import NewYearsDay
+from extended_datetime.holidays.new_years_day import NewYearsDay
 
 
 class NewYearsDayUS(NewYearsDay):
