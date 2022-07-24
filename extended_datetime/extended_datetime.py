@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Iterator
 
-from .base.holiday_base import HolidayBase
+from extended_datetime.base.holiday_base import HolidayBase
 
 
 class ExtendedDateTime(datetime):
