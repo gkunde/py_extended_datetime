@@ -28,10 +28,8 @@ next_year = current_date.date_add(years=1)
 ```
 
 ## Important: Adding years or months
-The ability to add years and months assumes the calculation is made from the same starting point. This means if you need to calculate dates multiple months into the future or past, that you always use the same starting point, and add the number of months or years needed.
+The ability to add years and months assumes the calculation is made from the same starting point. This means if you need to calculate dates multiple months or years into the future or past, that you always use the original object, and alter the the number of months or years provided.
 
-If dates are chained, meaning the each derived object is used to calculate the next one, depending on the date, they may alter the day of the month until a common day is reached.
+When adding months or years, the day of month will change if the month of the result does not contain as many days as the original month. This means if you have a date like the 31st of March, and add one month, you will have a result with the 30th of April. This is applied to all end of month scenarios and is why it is recommended to use the original object to calculate needed dates. That will ensure that if you start with the 31st of March, and require April and May, those dates will have days of the month being the 30th and 31st respectively. If you were to result for April, to calculate May, you will end up with the 30th of May.
 
-For example, if your starting date is the 31st of January, and 1 month is added to that date, the results will be the 28th of February (non-leap year.) If you add a month to that date, the result will be the 28th of March. If the goal is to calculate the end of every month, this appraoch will not yield the desired result.
-
-To avoid the taget from sliding, always use your starting date to generate each date in the series.
+To avoid the taget from sliding, always use your original object to generate each date in the series.
