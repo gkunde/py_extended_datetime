@@ -32,4 +32,4 @@ The ability to add years and months assumes the calculation is made from the sam
 
 When adding months or years, the day of month will change if the month of the result does not contain as many days as the original month. This means if you have a date like the 31st of March, and add one month, you will have a result with the 30th of April. This is applied to all end of month scenarios and is why it is recommended to use the original object to calculate needed dates. That will ensure that if you start with the 31st of March, and require April and May, those dates will have days of the month being the 30th and 31st respectively. If you were to use the result for April, to calculate May, you will end up with the 30th of May.
 
-To avoid the taget from sliding, always use your original object to generate each date in the series.
+To avoid the target date from sliding, always use your original object to generate each date in the series.
