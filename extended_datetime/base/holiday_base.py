@@ -18,4 +18,4 @@ class HolidayBase(metaclass=ABCMeta):
 
         :returns: A boolean result indicating if the date matches.
         """
-        pass
+        raise NotImplementedError()
