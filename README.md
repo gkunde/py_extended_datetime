@@ -55,6 +55,6 @@ for _ in range(3):
 # 2000-05-30 00:00:00
 ```
 
-For the "Good approach" each consecutive date is calculated from the same base or starting date. This allows the function to properly adjust the date only when necassary. If you were making an payment date calculator and the consumer desired to make payments on the last day of the month. This approach will ensure that the payment is always made on the last day of the mont.
+For the "Good approach" each consecutive date is calculated from the same base or starting date. This allows the function to properly adjust the date only when necassary. If you were making an payment date calculator and the consumer desired to make payments on the last day of the month. This approach will ensure that the payment is always made on the last day of the month.
 
 For the "Incorrect approach" you can see how using the result of the previous calculation affects each following calculation. If you were to calculate more than 12 months, eventually you will see the date adjust to the 28th of each month (February only has 28 days, except in leap years.)
