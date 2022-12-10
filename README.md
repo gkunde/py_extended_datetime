@@ -30,6 +30,31 @@ next_year = current_date.date_add(years=1)
 ## Important: Adding years or months
 The ability to add years and months assumes the calculation is made from the same starting point. This means if you need to calculate dates multiple months or years into the future or past, that you always use the original object, and alter the the number of months or years provided.
 
-When adding months or years, the day of month will change if the month of the result does not contain as many days as the original month. This means if you have a date like the 31st of March, and add one month, you will have a result with the 30th of April. This is applied to all end of month scenarios and is why it is recommended to use the original object to calculate needed dates. That will ensure that if you start with the 31st of March, and require April and May, those dates will have days of the month being the 30th and 31st respectively. If you were to use the result for April, to calculate May, you will end up with the 30th of May.
+```python
+# Good approach to scheduling future dates
+starting_date = ExtendedDateTime(2000, 3, 31)
 
-To avoid the target date from sliding, always use your original object to generate each date in the series.
+for days_to_add in range(3):
+  print(f"{starting_date.date_add(months=days_to_add)}")
+
+# results:
+# 2000-03-31 00:00:00
+# 2000-04-30 00:00:00
+# 2000-05-31 00:00:00
+
+# Incorrect approach
+scheduled_date = ExtendedDateTime(2000, 3, 31)
+
+for _ in range(3):
+  print(f"{scheduled_date}")
+  scheduled_date = scheduled_date.date_add(months=1)
+ 
+# results
+# 2000-03-31 00:00:00
+# 2000-04-30 00:00:00
+# 2000-05-30 00:00:00
+```
+
+For the "Good approach" each consecutive date is calculated from the same base or starting date. This allows the function to properly adjust the date only when necassary. If you were making an payment date calculator and the consumer desired to make payments on the last day of the month. This approach will ensure that the payment is always made on the last day of the mont.
+
+For the "Incorrect approach" you can see how using the result of the previous calculation affects each following calculation. If you were to calculate more than 12 months, eventually you will see the date adjust to the 28th of each month (February only has 28 days, except in leap years.)
