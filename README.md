@@ -27,7 +27,7 @@ next_month = current_date.date_add(months=1)
 next_year = current_date.date_add(years=1)
 ```
 
-## Important: Adding years or months
+## Important: Adding months or years
 The ability to add years and months assumes the calculation is made from the same starting point. This means if you need to calculate dates multiple months or years into the future or past, that you always use the original object, and alter the the number of months or years provided.
 
 ```python
