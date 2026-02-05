@@ -11,10 +11,10 @@ class IndependenceDayUS:
         if date_to_check.day == 4:
             return True
 
-        if date_to_check.day == 3 and date_to_check.weekday() == 4:
+        if date_to_check.day == 3 and date_to_check.isoweekday() == 5:
             return True
 
-        if date_to_check.day == 5 and date_to_check.weekday() == 0:
+        if date_to_check.day == 5 and date_to_check.isoweekday() == 1:
             return True
 
         return False
