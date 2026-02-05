@@ -13,7 +13,7 @@ class NewYearsDayUS(NewYearsDay):
         if date_to_check.month != 1:
             return False
 
-        if date_to_check.day == 2 and date_to_check.weekday() == 0:
+        if date_to_check.day == 2 and date_to_check.isoweekday() == 1:
             return True
 
         return False
