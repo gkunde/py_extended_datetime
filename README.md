@@ -15,7 +15,7 @@ The goal of this library is to provide convenience methods to a datetime object,
 ## Examples
 ### Adding dates
 ```python
-current_date = ExtendedDateTime(datetime.utcnow())
+current_date = ExtendedDateTime(datetime.now(tz=timezone.utc))
 
 # equivalent to current_date + timedelta(days=1)
 tomorrow = current_date.date_add(days=1) 
