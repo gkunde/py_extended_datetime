@@ -34,8 +34,8 @@ The ability to add months or years assumes the calculation is made from the same
 # Good approach to scheduling future dates
 starting_date = ExtendedDateTime(2000, 3, 31)
 
-for days_to_add in range(3):
-  print(f"{starting_date.date_add(months=days_to_add)}")
+for months_to_add in range(3):
+  print(f"{starting_date.date_add(months=months_to_add)}")
 
 # results:
 # 2000-03-31 00:00:00
