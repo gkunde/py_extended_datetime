@@ -1,7 +1,9 @@
 from datetime import datetime
 
+from extended_datetime.base.holiday_base import HolidayBase
 
-class PresidentsDayUS:
+
+class PresidentsDayUS(HolidayBase):
 
     def check_date(self, date_to_check: datetime) -> bool:
 
