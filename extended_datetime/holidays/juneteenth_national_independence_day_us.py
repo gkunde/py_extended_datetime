@@ -7,7 +7,7 @@ class JuneteenthNationalIndependenceDayUS(HolidayBase):
 
     def check_date(self, date_to_check: datetime) -> bool:
 
-        if date_to_check.month != 2:
+        if date_to_check.month != 6:
             return False
 
         if date_to_check.day == 19:
