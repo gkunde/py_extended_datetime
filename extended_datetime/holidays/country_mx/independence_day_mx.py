@@ -9,5 +9,11 @@ class IndependenceDayMX(HolidayBase):
 
         if date_to_check.month == 9 and date_to_check.day == 16:
             return True
+        
+        if date_to_check.month == 9 and date_to_check.day == 15 and date_to_check.isoweekday() == 5:
+            return True
+        
+        if date_to_check.month == 9 and date_to_check.day == 17 and date_to_check.isoweekday() == 1:
+            return True
 
         return False
