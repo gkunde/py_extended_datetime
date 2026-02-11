@@ -1,8 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Iterable, Iterator, Optional
-
-from extended_datetime.base.holiday_base import HolidayBase
-
+from typing import Optional
 
 class ExtendedDateTime(datetime):
     """
@@ -196,44 +193,3 @@ class ExtendedDateTime(datetime):
             return True
 
         return False
-
-    def is_business_day(
-            self,
-            date_to_check: Optional[datetime] = None,
-            holiday_schedules: Optional[Iterable[HolidayBase]] = None,
-            weekend_weekdays: Optional[Iterable[int]] = None) -> bool:
-        """
-        Determine if the object's date is a traditional business day.
-
-        :param date_to_check: Provide an alternative datetime object to the
-            one in the object to check.
-
-        :param holiday_schedules: A collection of BaseHoliday type objects
-            that determine if a provided date is an observed holiday.
-
-        :param weekend_weekdays: Provide an alternative set of weekdays to
-            consider as weekends or non-business days. Defaults to Saturday
-            and Sunday.
-            (Zero based: Monday == 0 ... Sunday == 6)
-
-        :returns: A Boolean to indicate the object is a business day.
-        """
-
-        if not date_to_check:
-            date_to_check = self
-
-        if not weekend_weekdays:
-            weekend_weekdays = (5, 6, )
-
-        if not holiday_schedules:
-            holiday_schedules = []
-
-        if date_to_check.weekday() in weekend_weekdays:
-            return False
-
-        for holiday in holiday_schedules:
-
-            if holiday.check_date(date_to_check):
-                return False
-
-        return True

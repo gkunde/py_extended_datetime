@@ -2,7 +2,6 @@ import unittest
 from datetime import datetime
 
 from extended_datetime.extended_datetime import ExtendedDateTime
-from extended_datetime.holidays.new_years_day import NewYearsDay
 
 
 class Test_ExtendedDateTime(unittest.TestCase):
@@ -94,28 +93,3 @@ class Test_ExtendedDateTime(unittest.TestCase):
         o = ExtendedDateTime(1999, 1, 1)
 
         self.assertFalse(o.is_leap_year())
-
-    def test_is_business_day(self):
-
-        o = ExtendedDateTime(2000, 1, 1)
-
-        self.assertFalse(o.is_business_day())
-
-        o = ExtendedDateTime(2000, 1, 5)
-
-        self.assertTrue(o.is_business_day())
-
-    def test_is_business_day_custom(self):
-
-        o = ExtendedDateTime(2000, 1, 2)
-
-        # Using -1 as it cannot be used to represent a weekday
-        self.assertTrue(o.is_business_day(weekend_weekdays=(-1, )))
-
-    def test_is_business_day_holiday(self):
-
-        h = NewYearsDay()
-        o = ExtendedDateTime(2010, 1, 1)
-
-        self.assertTrue(o.is_business_day())
-        self.assertFalse(o.is_business_day(holiday_schedules=[h, ]))
