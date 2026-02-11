@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Iterator
+from typing import Iterable, Iterator, Optional
 
 from extended_datetime.base.holiday_base import HolidayBase
 
@@ -12,14 +12,14 @@ class ExtendedDateTime(datetime):
 
     def date_add(
             self,
-            years: int = None,
-            months: int = None,
-            days: int = None,
-            hours: int = None,
-            minutes: int = None,
-            seconds: int = None,
-            microseconds: int = None,
-            weeks: int = None) -> 'ExtendedDateTime':
+            years: Optional[int] = None,
+            months: Optional[int] = None,
+            days: Optional[int] = None,
+            hours: Optional[int] = None,
+            minutes: Optional[int] = None,
+            seconds: Optional[int] = None,
+            microseconds: Optional[int] = None,
+            weeks: Optional[int] = None) -> 'ExtendedDateTime':
         """
         Add the provided values for each unit of time to the value stored in
         this ExtendedDateTime object.
@@ -138,7 +138,7 @@ class ExtendedDateTime(datetime):
 
         return new_self
 
-    def end_of_month_day(self, year: int = None, month: int = None) -> int:
+    def end_of_month_day(self, year: Optional[int] = None, month: Optional[int] = None) -> int:
         """
         Determines the last day of the month using the object's year and
         month dateparts.
@@ -174,7 +174,7 @@ class ExtendedDateTime(datetime):
 
         return end_of_month
 
-    def is_leap_year(self, year: int = None) -> bool:
+    def is_leap_year(self, year: Optional[int] = None) -> bool:
         """
         Identifies if the year datepart of the object is within a leap year.
 
@@ -199,9 +199,9 @@ class ExtendedDateTime(datetime):
 
     def is_business_day(
             self,
-            date_to_check: datetime = None,
-            holiday_schedules: Iterator[HolidayBase] = None,
-            weekend_weekdays: tuple[int] = None) -> bool:
+            date_to_check: Optional[datetime] = None,
+            holiday_schedules: Optional[Iterable[HolidayBase]] = None,
+            weekend_weekdays: Optional[Iterable[int]] = None) -> bool:
         """
         Determine if the object's date is a traditional business day.
 
