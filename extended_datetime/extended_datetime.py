@@ -154,22 +154,13 @@ class ExtendedDateTime(datetime):
 
         if not month:
             month = self.month
+        
+        _start_of_month = datetime(year, month, 1)
+        _start_of_month += timedelta(days=32)
+        _start_of_month = _start_of_month.replace(day=1)
 
-        end_of_month = 31
+        return (_start_of_month - timedelta(days=1)).day
 
-        if month in (4, 6, 9, 11, ):
-            # Short months
-            end_of_month = 30
-
-        elif month == 2:
-            # February
-            end_of_month = 28
-
-            if self.is_leap_year(year):
-                # Leap Year
-                end_of_month = 29
-
-        return end_of_month
 
     def is_leap_year(self, year: Optional[int] = None) -> bool:
         """
