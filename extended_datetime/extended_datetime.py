@@ -155,10 +155,14 @@ class ExtendedDateTime(datetime):
         if not month:
             month = self.month
         
+        # move to the first day of the given month
         _start_of_month = datetime(year, month, 1)
+        # add 32 days to ensure we are in the next month
         _start_of_month += timedelta(days=32)
+        # move back to the first day of "current" month
         _start_of_month = _start_of_month.replace(day=1)
 
+        # subtract one day to get the last day of the month and return the day value
         return (_start_of_month - timedelta(days=1)).day
 
 
