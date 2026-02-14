@@ -1,5 +1,11 @@
+"""
+ExtendedDateTime class is to extend the built-in datetime class with methods
+to perform localized date calculations.
+"""
+import calendar
 from datetime import datetime, timedelta
 from typing import Optional
+
 
 class ExtendedDateTime(datetime):
     """
@@ -149,27 +155,7 @@ class ExtendedDateTime(datetime):
         :returns: The last day of the object's year and month
         """
 
-        if not year:
-            year = self.year
-
-        if not month:
-            month = self.month
-
-        end_of_month = 31
-
-        if month in (4, 6, 9, 11, ):
-            # Short months
-            end_of_month = 30
-
-        elif month == 2:
-            # February
-            end_of_month = 28
-
-            if self.is_leap_year(year):
-                # Leap Year
-                end_of_month = 29
-
-        return end_of_month
+        return calendar.monthrange(year or self.year, month or self.month)[1]
 
     def is_leap_year(self, year: Optional[int] = None) -> bool:
         """
@@ -183,13 +169,4 @@ class ExtendedDateTime(datetime):
         :returns: A boolean True indicates the year datepart is a leap year.
         """
 
-        if not year:
-            year = self.year
-
-        if year % 4 == 0 and year % 100 != 0:
-            return True
-
-        if year % 4 == 0 and year % 100 == 0 and year % 400 == 0:
-            return True
-
-        return False
+        return calendar.isleap(year or self.year)
