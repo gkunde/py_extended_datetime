@@ -13,6 +13,108 @@ class ExtendedDateTime(datetime):
     calculations and other helpful properties.
     """
 
+    def add_years(self, years: int) -> 'ExtendedDateTime':
+        """
+        Docstring for add_years
+
+        :param years: Description
+        :return: Description
+        """
+
+        # deep copy self by adding a 0-delta
+        _self = self + timedelta()
+
+        _year = _self.year + years
+
+        _, y = calendar.monthrange(_year, _self.month)
+
+        return _self.replace(year=_year, day=min(_self.day, y))
+
+    def add_months(self, months: int) -> 'ExtendedDateTime':
+        """
+        Docstring for add_months
+
+        :param months: Description
+        :return: Description
+        """
+
+        # deep copy self by adding a 0-delta
+        _self = self + timedelta()
+
+        _self = _self.add_years(months // 12)
+
+        _month = _self.month + (months % 12)
+
+        _, y = calendar.monthrange(_self.year, _month)
+
+        return _self.replace(month=_month, day=min(_self.day, y))
+
+    def add_days(self, days: int) -> 'ExtendedDateTime':
+        """
+        Docstring for add_days
+
+        :param days: Description
+        :return: Description
+        """
+
+        # deep copy self by adding a 0-delta
+        return self + timedelta(days=days)
+
+    def add_weeks(self, weeks: int) -> 'ExtendedDateTime':
+        """
+        Docstring for add_weeks
+
+        :param weeks: Description
+        :return: Description
+        """
+
+        # deep copy self by adding a 0-delta
+        return self + timedelta(weeks=weeks)
+
+    def add_hours(self, hours: int) -> 'ExtendedDateTime':
+        """
+        Docstring for add_hours
+
+        :param hours: Description
+        :return: Description
+        """
+
+        # deep copy self by adding a 0-delta
+        return self + timedelta(hours=hours)
+
+    def add_minutes(self, minutes: int) -> 'ExtendedDateTime':
+        """
+        Docstring for add_minutes
+
+        :param minutes: Description
+        :return: Description
+        """
+
+        # deep copy self by adding a 0-delta
+        return self + timedelta(minutes=minutes)
+
+    def add_seconds(self, seconds: int) -> 'ExtendedDateTime':
+        """
+        Docstring for add_seconds
+
+        :param seconds: Description
+        :return: Description
+        """
+
+        # deep copy self by adding a 0-delta
+        return self + timedelta(seconds=seconds)
+
+    def add_microseconds(self, microseconds: int) -> 'ExtendedDateTime':
+        """
+        Docstring for add_microseconds
+
+        :param microseconds: Description
+        :return: Description
+        """
+
+        # deep copy self by adding a 0-delta
+        return self + timedelta(microseconds=microseconds)
+
     def date_add(
             self,
             years: Optional[int] = None,
@@ -63,83 +165,15 @@ class ExtendedDateTime(datetime):
         :returns: A new instance of ExtendedDateTime with computed value.
         """
 
-        # deep copy self by adding a 0-delta
-        new_self = self + timedelta()
-
-        if months:
-            # normalize months, by reducing to years and months
-
-            months_abs = abs(months)
-
-            year_offset = months_abs // 12
-            month_remaining = months_abs % 12
-
-            # make sure years has been initialized with a numeric value
-            years = years or 0
-
-            if months < 0:
-                years -= year_offset
-                months = 0 - month_remaining
-
-            else:
-                years += year_offset
-                months = month_remaining
-
-        if years:
-
-            new_year = new_self.year + years
-
-            # For leap years, it becomes necassary to ensure that if the day
-            # represents the end of the month, it is updated appropriately.
-            new_days = min(
-                self.day,
-                self.end_of_month_day(new_year, new_self.month))
-
-            # Creating a delta of only the parts that were modified.
-            new_self += (datetime(new_year, new_self.month, new_days) -
-                         datetime(new_self.year, new_self.month, new_self.day))
-
-        if months:
-
-            new_year = new_self.year
-
-            new_month = new_self.month + months
-
-            if new_month < 1:
-                new_year -= 1
-
-            if not new_month:
-                new_month = 12
-            elif new_month < 1:
-                new_month = 12 + new_month
-
-            # Make sure the new month's calculation does not overflow the
-            # month's number of days.
-            new_days = min(
-                new_self.day,
-                self.end_of_month_day(new_year, new_month))
-
-            # Creating a delta of only the parts that were modified
-            new_self += (datetime(new_year, new_month, new_days) -
-                         datetime(new_self.year, new_self.month, new_self.day))
-
-        # normalize by coalesce to 0 for values
-        new_days = days or 0
-        new_hours = hours or 0
-        new_minutes = minutes or 0
-        new_seconds = seconds or 0
-        new_microseconds = microseconds or 0
-        new_weeks = weeks or 0
-
-        new_self += timedelta(
-            days=new_days,
-            hours=new_hours,
-            minutes=new_minutes,
-            seconds=new_seconds,
-            microseconds=new_microseconds,
-            weeks=new_weeks)
-
-        return new_self
+        return self \
+            .add_years(years or 0) \
+            .add_months(months or 0) \
+            .add_days(days or 0) \
+            .add_hours(hours or 0) \
+            .add_minutes(minutes or 0) \
+            .add_seconds(seconds or 0) \
+            .add_microseconds(microseconds or 0) \
+            .add_weeks(weeks or 0)
 
     def end_of_month_day(self, year: Optional[int] = None, month: Optional[int] = None) -> int:
         """
