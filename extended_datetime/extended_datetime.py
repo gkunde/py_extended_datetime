@@ -155,15 +155,12 @@ class ExtendedDateTime(datetime):
         if not month:
             month = self.month
         
-        # move to the first day of the given month
-        _start_of_month = datetime(year, month, 1)
-        # add 32 days to ensure we are in the next month
-        _start_of_month += timedelta(days=32)
-        # move back to the first day of "current" month
-        _start_of_month = _start_of_month.replace(day=1)
+        # take the given year and month and move the day forward 32 days, the
+        # set the day of the month to the first.
+        _start_of_next_month = (datetime(year, month, 1) + timedelta(days=32)).replace(day=1)
 
         # subtract one day to get the last day of the month and return the day value
-        return (_start_of_month - timedelta(days=1)).day
+        return (_start_of_next_month - timedelta(days=1)).day
 
 
     def is_leap_year(self, year: Optional[int] = None) -> bool:
