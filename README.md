@@ -18,13 +18,13 @@ The goal of this library is to provide convenience methods to a datetime object,
 current_date = ExtendedDateTime(datetime.now(tz=timezone.utc))
 
 # equivalent to current_date + timedelta(days=1)
-tomorrow = current_date.date_add(days=1) 
+tomorrow = current_date.add_days(1) 
 
 # There are even months!
-next_month = current_date.date_add(months=1)
+next_month = current_date.add_months(1)
 
 # equivalent to `current_date + timedelta(days=365)`, but accounting for leap years
-next_year = current_date.date_add(years=1)
+next_year = current_date.add_years(1)
 ```
 
 ## Important: Adding months or years
@@ -35,7 +35,7 @@ The ability to add months or years assumes the calculation is made from the same
 starting_date = ExtendedDateTime(2000, 3, 31)
 
 for months_to_add in range(3):
-  print(f"{starting_date.date_add(months=months_to_add)}")
+  print(f"{starting_date.add_months(months_to_add)}")
 
 # results:
 # 2000-03-31 00:00:00
@@ -47,7 +47,7 @@ scheduled_date = ExtendedDateTime(2000, 3, 31)
 
 for _ in range(3):
   print(f"{scheduled_date}")
-  scheduled_date = scheduled_date.date_add(months=1)
+  scheduled_date = scheduled_date.add_months(1)
  
 # results
 # 2000-03-31 00:00:00
